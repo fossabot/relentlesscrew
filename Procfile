@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp build/classes:build/libs/* RelentlessCrew
+web: java $JAVA_OPTS -cp build/classes:build/libs/* xyz.relentlesscrew.Main
