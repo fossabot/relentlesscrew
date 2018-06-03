@@ -18,7 +18,11 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
 
     private Class<T> clazz;
 
-    private SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
+    private SessionFactory sessionFactory = new Configuration()
+            .setProperty("hibernate.hikari.dataSource.url", System.getenv("DB_URL"))
+            .setProperty("hibernate.hikari.dataSource.user",System.getenv("DB_USER"))
+            .setProperty("hibernate.hikari.dataSource.password", System.getenv("DB_PASSWORD"))
+            .configure().buildSessionFactory();
 
     @SuppressWarnings("unchecked")
     public GenericDAOImpl() {

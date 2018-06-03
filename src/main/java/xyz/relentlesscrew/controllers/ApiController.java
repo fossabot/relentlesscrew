@@ -7,6 +7,7 @@ import static spark.Spark.halt;
 
 public class ApiController {
 
+    // TODO: make api flags + api table in db
     public static Filter beforeApiCall = (request, response) -> {
         try {
             String apiKey = request.headers("apiKey");

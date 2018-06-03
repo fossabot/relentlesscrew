@@ -3,12 +3,10 @@ package xyz.relentlesscrew.persistence.DAO;
 import org.hibernate.Session;
 import xyz.relentlesscrew.persistence.model.Member;
 import xyz.relentlesscrew.persistence.model.Member_;
-import xyz.relentlesscrew.persistence.model.Rank;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.List;
 
 public class MemberDAO extends GenericDAOImpl<Member, Long> {
 
@@ -28,17 +26,19 @@ public class MemberDAO extends GenericDAOImpl<Member, Long> {
         return member;
     }
 
-    public List<Member> findByRank(String rankName) {
+    public Member findByDiscordId(Long discordId) {
         Session session = getSession();
 
+        session.beginTransaction();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery<Member> query = criteriaBuilder.createQuery(Member.class);
         Root<Member> root = query.from(Member.class);
+        query.where(criteriaBuilder.equal(root.get(Member_.discordId), discordId));
 
-        Rank rank = new RankDAO().findByRankName(rankName);
+        Member member = session.createQuery(query).uniqueResult();
 
-        query.where(criteriaBuilder.equal(root.get(Member_.rank), rank));
+        session.getTransaction().commit();
 
-        return session.createQuery(query).getResultList();
+        return member;
     }
 }

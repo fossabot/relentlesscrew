@@ -8,9 +8,6 @@
         <property name="hibernate.hikari.maximumPoolSize">10</property>
         <property name="hibernate.hikari.idleTimeout">30000</property>
         <property name="hibernate.hikari.dataSourceClassName">org.postgresql.ds.PGSimpleDataSource</property>
-        <property name="hibernate.hikari.dataSource.url">jdbc:postgresql://localhost:5432/rangercompany</property>
-        <property name="hibernate.hikari.dataSource.user">postgres</property>
-        <property name="hibernate.hikari.dataSource.password">MaRkO24146460;</property>
         <property name="hibernate.current_session_context_class">org.hibernate.context.internal.ThreadLocalSessionContext</property>
         <property name="hibernate.hbm2ddl.auto">update</property>
 
