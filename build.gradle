@@ -4,7 +4,6 @@ plugins {
 }
 
 mainClassName = 'xyz.relentlesscrew.Main'
-applicationName = 'Main'
 
 sourceCompatibility = 1.8
 
@@ -46,8 +45,8 @@ dependencies {
 jar {
     manifest {
         attributes(
-            'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
-            'Main-Class': mainClassName
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': mainClassName
         )
     }
 
@@ -58,15 +57,6 @@ jar {
     }
 }
 
-compileJava.options.encoding = 'UTF-8'
-
 task stage {
-    dependsOn build
+    dependsOn installDist
 }
-
-task copyToLib(type: Copy) {
-    into "$buildDir/libs"
-    from(configurations.compile)
-}
-
-stage.dependsOn(copyToLib)
