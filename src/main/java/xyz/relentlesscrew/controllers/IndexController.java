@@ -21,7 +21,7 @@ public class IndexController {
         model.put("invite", config.getDiscordInvite());
         model.put("recaptchaKey", config.getRecaptchaSiteKey());
 
-        String latestAnnouncement = Config.getConfig().getLatestAnnouncement();
+        String latestAnnouncement = config.getLatestAnnouncement();
 
         if (!latestAnnouncement.trim().equals("")) {
             model.put("annoucement", latestAnnouncement);

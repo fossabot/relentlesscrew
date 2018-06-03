@@ -58,5 +58,5 @@ jar {
 }
 
 task stage {
-    dependsOn installDist
+    dependsOn build
 }
