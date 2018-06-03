@@ -1,8 +1,8 @@
-#**Relentless Crew**
+# **Relentless Crew**
 
 This app is a website and an api for a Discord Bot ([Relentless Bot](https://github.com/medicm/relentlessbot)) to keep track of and manage members of a [Dauntless](https://playdauntless.com/) guild ([Relentless Crew](http://relentlesscrew.xyz)).
 
-##**Built with**
+## **Built with**
 - [SparkJava](http://sparkjava.com/) - A micro framework for creating web applications in Kotlin and Java 8 with minimal effort
 - [handlebars.java](https://github.com/jknack/handlebars.java) - Logic-less and semantic Mustache templates with Java 
 - [Hibernate](http://hibernate.org/) - an object-relational mapping tool for Java. 
