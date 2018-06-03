@@ -1,0 +1,33 @@
+{{#partial "title"}}Member List{{/partial}}
+
+{{#partial "navbaritems"}}
+    <li class="nav-item">
+        <a class="nav-link js-scroll-trigger" href="/">Home</a>
+    </li>
+{{/partial}}
+
+{{#partial "headertitle"}}Relentless Crew Member List{{/partial}}
+
+{{#partial "content"}}
+<section id="memberlist">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Rank</th>
+                        </tr>
+                    </thead>
+                    <tbody id="content">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{{/partial}}
+{{#partial "scripts"}}<script src="/js/relentlesscrew.membertable.js"></script>{{/partial}}
+
+{{> template.hbs}}

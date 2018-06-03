@@ -1,0 +1,221 @@
+/*!
+ * Ranger Company CSS - May 2018
+ * © 2010-2018 ArenaNet, LLC. All rights reserved. Guild Wars, Guild Wars 2, Heart of Thorns, Guild Wars 2: Path of Fire, ArenaNet, NCSOFT, the Interlocking NC Logo, and all associated logos and designs are trademarks or registered trademarks of NCSOFT Corporation.
+ * All other trademarks are the property of their respective owners.
+ */
+@font-face {
+    font-family: 'Quantify Bold v2.6';
+    src: url('font/Quantify Bold v2.6.eot');
+    src: url('font/Quantify Bold v2.6.woff2') format('woff2'),
+    url('font/Quantify Bold v2.6.eot?#iefix') format('embedded-opentype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Quantify-Bold';
+    src: url('font/Quantify-Bold.woff') format('woff'),
+    url('font/Quantify-Bold.ttf') format('truetype'),
+    url('font/Quantify-Bold.svg#Quantify-Bold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+.navbar-brand {
+    font-family: 'Quantify-Bold', serif;
+}
+
+header {
+    padding: 154px 0 100px;
+}
+
+@media (min-width: 992px) {
+    header {
+        padding: 156px 0 100px;
+    }
+}
+
+header.masthead {
+    position: relative;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    background: #fff scroll center center no-repeat;
+}
+
+header.masthead .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    opacity: .5
+}
+
+header.masthead .page-heading,
+header.masthead .post-heading,
+header.masthead .site-heading {
+    padding: 200px 0 150px;
+}
+
+@media only screen and (min-width: 768px) {
+    header.masthead .page-heading,
+    header.masthead .post-heading,
+    header.masthead .site-heading {
+        padding: 200px 0
+    }
+}
+
+header.masthead .page-heading,
+header.masthead .site-heading {
+    text-align: center;
+}
+
+header.masthead .page-heading h1,
+header.masthead .site-heading h1 {
+    font-size: 3.643rem;
+    margin-top: 0;
+}
+
+header.masthead .page-heading .subheading,
+header.masthead .site-heading .subheading {
+    font-size: 1.7rem;
+    font-weight: 300;
+    line-height: 1.1;
+    display: block;
+    margin: 10px 0 0;
+}
+
+@media only screen and (min-width: 768px) {
+    header.masthead .page-heading h1,
+    header.masthead .site-heading h1 {
+        font-size: 5.7rem;
+    }
+}
+
+header.masthead .post-heading h1 {
+    font-size: 2.5rem;
+}
+
+header.masthead .post-heading .meta,
+header.masthead .post-heading .subheading {
+    line-height: 1.1;
+    display: block
+}
+
+header.masthead .post-heading .subheading {
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin: 10px 0 30px;
+}
+
+header.masthead .post-heading .meta {
+    font-size: 1.25rem;
+    font-weight: 300;
+    font-style: italic;
+}
+
+@media only screen and (min-width: 768px) {
+    header.masthead .post-heading h1 {
+        font-size: 3.4rem;
+    }
+
+    header.masthead .post-heading .subheading {
+        font-size: 1.8rem;
+    }
+}
+
+header.masthead a {
+    color: #ffffff;
+    text-decoration: underline;
+}
+header.masthead a:hover {
+    color: #007bff;
+}
+
+section {
+    padding: 60px 0;
+}
+
+@media only screen and (min-width: 768px) {
+    .containerbox {
+        border-radius: 0.2rem;
+    }
+
+    section {
+        padding: 100px 0;
+    }
+
+    section.application {
+        background: url('/img/application-bg.jpg') scroll center center no-repeat;
+    }
+
+    .card.cardpadding {
+        background: #d8d8d8;
+        background: transparent\9;
+        background:rgba(216, 216, 216, 0.33);
+        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#d8d8d8d8,endColorstr=#d8d8d8d8);
+    }
+
+    footer {
+        background: url('/img/footer-bg.jpg') scroll center center no-repeat;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .card.cardpadding {
+        border: none;
+    }
+}
+
+h1, section h2 {
+    font-family: 'Quantify-Bold', serif;
+}
+
+form.card {
+    padding: 20px;
+}
+
+.card.cardpadding {
+    padding: 10px;
+}
+
+.discordframe {
+    height: 400px;
+    width: 400px;
+}
+
+@media only screen and (max-width: 768px) {
+    .discordframe {
+        width: 280px;
+    }
+}
+
+.invalid-form {
+    border: 1px solid #ff2218;
+}
+
+.valid-form {
+    border: 1px solid #15a82d;
+}
+
+.discord-link {
+    color: #0186ff !important;
+}
+
+.tooltip-inner {
+    max-width: 350px;
+}
+
+.doggo-img {
+    max-width: 500px;
+    width: auto;
+    height: auto;
+}
+
+li.active a {
+
+}
+

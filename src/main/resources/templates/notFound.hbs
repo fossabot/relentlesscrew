@@ -1,0 +1,28 @@
+{{#partial "title"}}Not Found{{/partial}}
+
+{{#partial "navbaritems"}}
+    <li class="nav-item">
+        <a class="nav-link js-scroll-trigger" href="/">Home</a>
+    </li>
+{{/partial}}
+
+{{#partial "headertitle"}}404{{/partial}}
+
+{{#partial "content"}}
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h3>The content you are trying to view does not exist.</h3>
+                    <p>Here's an image of a random doggo</p>
+                </div>
+                <div class="col-lg-8 mx-auto">
+                    <div id="doggo-img"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+{{/partial}}
+{{#partial "scripts"}}<script src="/js/relentlesscrew.doggo.js"></script>{{/partial}}
+
+{{> template.hbs}}

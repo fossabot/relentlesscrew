@@ -1,0 +1,86 @@
+{{#partial "title"}}Relentless Crew - a Dauntless Guild{{/partial}}
+
+{{#partial "navbaritems"}}
+<li class="nav-item">
+    <a class="nav-link js-scroll-trigger" href="#about">About</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link js-scroll-trigger" href="#apply">Apply</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+</li>
+{{/partial}}
+
+{{#partial "headertitle"}}Welcome to Relentless Crew!{{/partial}}
+
+{{#partial "content"}}
+<!-- content -->
+<section id="about">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>About us</h2>
+                <p class="lead text-justify">
+                    {{{about}}}
+                </p>
+                {{#if motd}}
+                    <br />
+                    <h2>Message of the day</h2>
+                    <p class="lead text-justify">
+                        {{{motd}}}
+                    </p>
+                {{/if}}
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="apply" class="application">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto card cardpadding">
+                <h2>Application form</h2>
+                <form class="card" action="/" id="application_form" method="post">
+                    <div id="result" role="alert"></div>
+                    <div class="form-group">
+                        <label for="discordusername">Discord Username <small>(If you don't have discord register <a href="https://discordapp.com/register" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="right" title="Opens https://discordapp.com/register in a new tab">here</a>)</small></label>
+                        <input type="text" class="form-control" id="discordusername" name="discordusername" placeholder="example#1234" aria-describedby="discordHelpBlock" required>
+                        <small id="discordHelpBlock" class="form-text text-muted">
+                            After applying make sure you join our discord guild as it is our main method of communication.
+                        </small>
+                    </div>
+                    <div class="form-group">
+                        <label for="dauntlessusername">Dauntless Username <small>(You can register and play dauntless for free <a href="https://playdauntless.com/accounts/" target="_blank" rel="noopener noreferrer" data-toggle="tooltip" data-placement="right" title="Opens https://playdauntless.com/accounts/ in a new tab">here</a>)</small></label>
+                        <input type="text" class="form-control" id="dauntlessusername" name="dauntlessusername" placeholder="XxXProKiller69XxX" required>
+                    </div>
+                    <div class="form-group">
+                        <div class="g-recaptcha" data-sitekey="{{recaptchaKey}}"></div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h2>Contact us</h2>
+                <p class="lead">The best way you can contact the leaders/officers is through our discord guild/server, but you can also contact one of them by sending them a whisper ingame.</p>
+                <div class="text-center" id="discord">
+                    <iframe class="discordframe" src="https://discordapp.com/widget?id=424273135769223181&theme=light" allowtransparency="true" frameborder="0"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{{/partial}}
+{{#partial "scripts"}}
+    <script src="/js/relentlesscrew.form.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+{{/partial}}
+
+{{> template.hbs}}
