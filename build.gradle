@@ -32,7 +32,6 @@ dependencies {
     compile 'com.github.kevinsawicki:http-request:6.0'
     compile 'org.projectlombok:lombok:1.16.20'
     compile 'com.google.code.gson:gson:2.8.2'
-    compile 'com.google.inject:guice:4.2.0'
     compile 'commons-codec:commons-codec:1.11'
     compile 'org.yaml:snakeyaml:1.21'
 
