@@ -10,6 +10,8 @@ public class Path {
         public static class Api {
 
             public static final String PATH = "/api/";
+            public static final String PRIVATE_PATH = "private/";
+            public static final String PUBLIC_PATH = "public/";
 
             public static final String ALL_MEMBERS = "members/";
             public static final String RANGE_OF_MEMBERS = ":page/";

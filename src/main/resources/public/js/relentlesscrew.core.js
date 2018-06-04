@@ -27,7 +27,6 @@
     });
 
     var uri = window.location.pathname.split("/")[1];
-    console.log(uri);
     $('nav a[href="/'+ uri +'"]').parent().addClass("active");
 
     $('nav a').filter(function() {

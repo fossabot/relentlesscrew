@@ -29,13 +29,19 @@ public class Main {
         get(Path.Web.ALL_MEMBERS, MemberController.serveMembersPage);
 
         path(Path.Web.Api.PATH, () -> {
-            before("*", ApiController.beforeApiCall);
+            path(Path.Web.Api.PRIVATE_PATH, () -> {
+                before("*", ApiController.beforeApiCall);
 
-            get(Path.Web.Api.ALL_APPLICATIONS, ApplicationController.getAllApplications);
-            get(Path.Web.Api.SINGLE_APPLICATION, ApplicationController.getApplication);
-            post(Path.Web.Api.ALL_APPLICATIONS, ApplicationController.addApplication);
-            put(Path.Web.Api.SINGLE_APPLICATION, ApplicationController.updateApplication);
-            delete(Path.Web.Api.SINGLE_APPLICATION, ApplicationController.removeApplication);
+                get(Path.Web.Api.ALL_APPLICATIONS, ApplicationController.getAllApplications);
+                get(Path.Web.Api.SINGLE_APPLICATION, ApplicationController.getApplication);
+                post(Path.Web.Api.ALL_APPLICATIONS, ApplicationController.addApplication);
+                put(Path.Web.Api.SINGLE_APPLICATION, ApplicationController.updateApplication);
+                delete(Path.Web.Api.SINGLE_APPLICATION, ApplicationController.removeApplication);
+
+                post(Path.Web.Api.ALL_MEMBERS, MemberController.addMember);
+                put(Path.Web.Api.SINGLE_MEMBER, MemberController.updateMember);
+                delete(Path.Web.Api.SINGLE_MEMBER, MemberController.removeMember);
+            });
 
             path(Path.Web.Api.ALL_MEMBERS, () -> {
                 get("/", MemberController.getAllMembers);
@@ -43,15 +49,12 @@ public class Main {
                 get(Path.Web.Api.RANGE_OF_MEMBERS_WITH_LIMIT, MemberController.getRangeOfMembers);
             });
 
-            post(Path.Web.Api.ALL_MEMBERS, MemberController.addMember);
-            put(Path.Web.Api.SINGLE_MEMBER, MemberController.updateMember);
-            delete(Path.Web.Api.SINGLE_MEMBER, MemberController.removeMember);
-
             get("*", ViewUtil.notFoundApi);
+
+            after("*", Filters.CORSFilter);
         });
 
         get("*", ViewUtil.notFound);
 
-        after("*", Filters.CORSFilter);
     }
 }

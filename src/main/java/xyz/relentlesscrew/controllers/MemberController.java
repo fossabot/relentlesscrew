@@ -31,9 +31,9 @@ public class MemberController {
             limit = Integer.parseInt(request.params(":limit"));
         } catch (Exception ignored) {}
 
-        List<Member> memberList = memberDAO.findRange((limit * page) - limit, limit);
-        response.header("totalPages", String.valueOf(Math.ceil(memberDAO.countRows() / limit)));
+        List<Member> memberList = memberDAO.findRange((limit * page) - limit, limit * page);
 
+        response.header("totalPages", String.valueOf((int) Math.ceil(memberDAO.countRows() / (double) limit)));
         return JsonUtil.responseJson(response, memberList);
     };
 
