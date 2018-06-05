@@ -1,9 +1,8 @@
 (function ($) {
     var table = $("#memberlist");
-    var totalPages;
     $.getJSON("/api/members/1", function (data, status, xhr) {
         var response = data["response"];
-        totalPages = xhr.getResponseHeader('totalpages');
+        var totalPages = xhr.getResponseHeader("totalpages");
 
         populateTable(table, response);
 
@@ -26,7 +25,7 @@
             return $("<tr>").append(
                 $("<td>").text(atob(member.dauntlessUsername)),
                 $("<td>").text(member.rank.name)
-            )
+            );
         });
 
         table.append(tableData);

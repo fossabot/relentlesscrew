@@ -32,13 +32,12 @@ public class Member implements Serializable {
     @ManyToOne
     private Rank rank;
 
-    public Member(Long discordId, String dauntlessUsername, Long rankId) {
+    public Member(Long discordId, String dauntlessUsername, Long discordRole) {
         this.discordId = discordId;
         this.dauntlessUsername = dauntlessUsername;
-        this.rank = new RankDAO().findById(rankId);
+        this.rank = new RankDAO().findRankByDiscordRole(discordRole);
     }
 
     public Member() {
     }
-
 }
