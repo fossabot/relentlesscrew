@@ -1,29 +1,27 @@
 package xyz.relentlesscrew.persistence.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
+@Data
+@NoArgsConstructor
 @Entity
 public class Application implements Serializable {
 
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Getter @Setter
     @Column(unique = true)
     private String discordUsername;
 
-    @Getter @Setter
     @Column(unique = true)
     private String dauntlessUsername;
 
-    @Getter
     private Date appliedOn;
 
     public Application(String discordUsername, String dauntlessUsername, Date appliedOn) {
@@ -36,8 +34,5 @@ public class Application implements Serializable {
         this.discordUsername = discordUsername;
         this.dauntlessUsername = dauntlessUsername;
         this.appliedOn = new Date();
-    }
-
-    public Application() {
     }
 }

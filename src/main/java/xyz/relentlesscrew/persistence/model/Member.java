@@ -1,29 +1,27 @@
 package xyz.relentlesscrew.persistence.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import xyz.relentlesscrew.persistence.DAO.RankDAO;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
+@NoArgsConstructor
+@Data
 @Entity
 public class Member implements Serializable {
 
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Getter @Setter
     @Column(unique = true)
     private Long discordId;
 
-    @Getter @Setter
     @Column(unique = true)
     private String dauntlessUsername;
 
-    @Getter @Setter
     @ManyToOne
     @JoinColumn(columnDefinition = "bigint default 3")
     private Rank rank;
@@ -32,8 +30,5 @@ public class Member implements Serializable {
         this.discordId = discordId;
         this.dauntlessUsername = dauntlessUsername;
         this.rank = new RankDAO().findRankByDiscordRole(discordRole);
-    }
-
-    public Member() {
     }
 }

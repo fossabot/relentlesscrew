@@ -5,7 +5,7 @@
     <session-factory>
         <property name="hibernate.connection.provider_class">org.hibernate.hikaricp.internal.HikariCPConnectionProvider</property>
         <property name="hibernate.hikari.minimumIdle">5</property>
-        <property name="hibernate.hikari.maximumPoolSize">10</property>
+        <property name="hibernate.hikari.maximumPoolSize">5</property>
         <property name="hibernate.hikari.idleTimeout">30000</property>
         <property name="hibernate.hikari.dataSourceClassName">org.postgresql.ds.PGSimpleDataSource</property>
         <property name="hibernate.current_session_context_class">org.hibernate.context.internal.ThreadLocalSessionContext</property>
