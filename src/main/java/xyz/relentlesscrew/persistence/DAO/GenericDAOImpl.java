@@ -1,11 +1,10 @@
 package xyz.relentlesscrew.persistence.DAO;
 
 import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import xyz.relentlesscrew.Main;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -18,12 +17,6 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
     static final Logger LOGGER = LoggerFactory.getLogger(GenericDAO.class);
 
     private Class<T> clazz;
-
-    SessionFactory sessionFactory = new Configuration()
-            .setProperty("hibernate.hikari.dataSource.url", System.getenv("DB_URL"))
-            .setProperty("hibernate.hikari.dataSource.user", System.getenv("DB_USER"))
-            .setProperty("hibernate.hikari.dataSource.password", System.getenv("DB_PASSWORD"))
-            .configure().buildSessionFactory();
 
     @SuppressWarnings("unchecked")
     GenericDAOImpl() {
@@ -38,7 +31,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
     @Override
     public boolean add(T transientObject) {
         Transaction transaction = null;
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = Main.sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
             session.save(transientObject);
@@ -64,7 +57,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
     @Override
     public boolean remove(T persistentObject) {
         Transaction transaction = null;
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = Main.sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
             session.remove(persistentObject);
@@ -89,7 +82,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
     @Override
     public void update(T transientObject) {
         Transaction transaction = null;
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = Main.sessionFactory.openSession()) {
             transaction = session.beginTransaction();
 
             session.update(transientObject);
@@ -113,7 +106,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
     @Override
     public T findById(ID id) {
         T persistentObject = null;
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = Main.sessionFactory.openSession()) {
             persistentObject = session.get(clazz, id);
         } catch (Exception e) {
             LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
@@ -129,7 +122,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
     @Override
     public List<T> findAll() {
         List<T> persistentObjects = null;
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = Main.sessionFactory.openSession()) {
             CriteriaQuery<T> query = session.getCriteriaBuilder().createQuery(clazz);
             query.from(clazz);
 
@@ -149,7 +142,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
     @Override
     public List<T> findRange(int beginIndex, int endIndex) {
         List<T> persistentObjects = null;
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = Main.sessionFactory.openSession()) {
             CriteriaQuery<T> query = session.getCriteriaBuilder().createQuery(clazz);
             query.from(clazz);
 
@@ -166,7 +159,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
     @Override
     public Long countRows() {
         Long rows = null;
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = Main.sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
 
             CriteriaQuery<Long> query = builder.createQuery(Long.class);

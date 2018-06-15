@@ -1,6 +1,7 @@
 package xyz.relentlesscrew.persistence.DAO;
 
 import org.hibernate.Session;
+import xyz.relentlesscrew.Main;
 import xyz.relentlesscrew.persistence.model.Member;
 import xyz.relentlesscrew.persistence.model.Member_;
 
@@ -12,7 +13,7 @@ public class MemberDAO extends GenericDAOImpl<Member, Long> {
 
     public Member findByDauntlessUsername(String dauntlessUsername) {
         Member member = null;
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = Main.sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Member> query = criteriaBuilder.createQuery(Member.class);
             Root<Member> root = query.from(Member.class);
@@ -27,7 +28,7 @@ public class MemberDAO extends GenericDAOImpl<Member, Long> {
 
     public Member findByDiscordId(Long discordId) {
         Member member = null;
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = Main.sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Member> query = criteriaBuilder.createQuery(Member.class);
             Root<Member> root = query.from(Member.class);

@@ -1,7 +1,7 @@
 package xyz.relentlesscrew.persistence.DAO;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import xyz.relentlesscrew.Main;
 import xyz.relentlesscrew.persistence.model.Application;
 import xyz.relentlesscrew.persistence.model.Application_;
 
@@ -13,7 +13,7 @@ public class ApplicationDAO extends GenericDAOImpl<Application, Long> {
 
     public Application findByDiscordUsername(String discordUsername) {
         Application application = null;
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = Main.sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Application> query = criteriaBuilder.createQuery(Application.class);
             Root<Application> root = query.from(Application.class);

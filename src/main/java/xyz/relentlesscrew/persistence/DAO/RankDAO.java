@@ -1,6 +1,7 @@
 package xyz.relentlesscrew.persistence.DAO;
 
 import org.hibernate.Session;
+import xyz.relentlesscrew.Main;
 import xyz.relentlesscrew.persistence.model.Rank;
 import xyz.relentlesscrew.persistence.model.Rank_;
 
@@ -12,7 +13,7 @@ public class RankDAO extends GenericDAOImpl<Rank, Long> {
 
     public Rank findRankByDiscordRole(Long discordRole) {
         Rank rank = null;
-        try (Session session = sessionFactory.openSession()) {
+        try (Session session = Main.sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Rank> query = criteriaBuilder.createQuery(Rank.class);
             Root<Rank> root = query.from(Rank.class);

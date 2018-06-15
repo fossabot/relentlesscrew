@@ -1,5 +1,7 @@
 package xyz.relentlesscrew;
 
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 import xyz.relentlesscrew.controllers.ApiController;
 import xyz.relentlesscrew.controllers.ApplicationController;
 import xyz.relentlesscrew.controllers.IndexController;
@@ -11,6 +13,12 @@ import xyz.relentlesscrew.util.ViewUtil;
 import static spark.Spark.*;
 
 public class Main {
+
+    public static SessionFactory sessionFactory = new Configuration()
+            .setProperty("hibernate.hikari.dataSource.url", System.getenv("DB_URL"))
+            .setProperty("hibernate.hikari.dataSource.user", System.getenv("DB_USER"))
+            .setProperty("hibernate.hikari.dataSource.password", System.getenv("DB_PASSWORD"))
+            .configure().buildSessionFactory();
 
     public static void main(String[] args) {
         final String portNumber = System.getenv("PORT");
