@@ -24,7 +24,7 @@ public class Member implements Serializable {
     @Column(unique = true)
     private String dauntlessUsername;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(columnDefinition = "bigint default 3")
     private Rank rank;
 
