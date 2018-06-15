@@ -134,8 +134,14 @@ public class ApplicationController {
     };
 
     public static Route getApplication = (request, response) -> {
-        Long id = Long.parseLong(request.params(":id"));
-        Application application = applicationDAO.findById(id);
+        String requestParams = request.params(":id");
+        Application application;
+        try {
+            Long id = Long.parseLong(requestParams);
+            application = applicationDAO.findById(id);
+        } catch (NumberFormatException e) {
+            application = applicationDAO.findByDiscordUsername(requestParams);
+        }
 
         return JsonUtil.responseJson(response, application);
     };
