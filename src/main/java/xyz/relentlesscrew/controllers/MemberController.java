@@ -46,9 +46,7 @@ public class MemberController {
             return JsonUtil.responseJson(response, "There was an error. Check the logs");
         }
 
-        memberDAO.add(member);
-
-        return JsonUtil.responseJson(response, member);
+        return JsonUtil.responseJson(response, memberDAO.add(member));
     };
 
     public static Route updateMember = (request, response) -> {
