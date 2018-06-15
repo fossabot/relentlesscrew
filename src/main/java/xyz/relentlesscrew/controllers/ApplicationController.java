@@ -86,13 +86,15 @@ public class ApplicationController {
         // send a message to discord that a user applied
         TemmieWebhook webhook = new TemmieWebhook(config.getDiscordWebhook());
 
-        String title = dauntlessUsername + " just appied.";
+        String dauntlessUsernameDecoded = new String(Base64.decodeBase64(dauntlessUsername), "UTF-8");
+        String discordUsernameDecoded = new String(Base64.decodeBase64(discordUsername), "UTF-8");
+        String title = dauntlessUsernameDecoded+ " just appied.";
         StringBuilder description = new StringBuilder();
         description.append("Dauntless Username: ")
-                .append(new String(Base64.decodeBase64(dauntlessUsername), "UTF-8"))
+                .append(dauntlessUsernameDecoded)
                 .append("\n");
         description.append("Discord Username: ")
-                .append(new String(Base64.decodeBase64(discordUsername), "UTF-8"))
+                .append(discordUsernameDecoded)
                 .append("\n");
 
         DiscordEmbed embed = new DiscordEmbed(title, String.valueOf(description));
