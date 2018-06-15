@@ -19,7 +19,7 @@ public class IndexController {
 
         model.put("about", config.getAbout());
         model.put("invite", config.getDiscordInvite());
-        model.put("recaptchaKey", config.getRecaptchaSiteKey());
+        model.put("recaptchaKey", System.getenv("RECAPTCHA_SITE"));
 
         String latestAnnouncement = config.getLatestAnnouncement();
 

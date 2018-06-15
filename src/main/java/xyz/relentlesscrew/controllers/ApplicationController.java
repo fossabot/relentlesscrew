@@ -48,7 +48,7 @@ public class ApplicationController {
 
         // server-sided re-captcha verification
         Map<String, String> recaptchaData = new HashMap<>();
-        recaptchaData.put("secret", config.getRecaptchaSecretKey());
+        recaptchaData.put("secret", System.getenv("RECAPTCHA_SECRET"));
         recaptchaData.put("response", recaptchaResponse);
         recaptchaData.put("remoteip", request.ip());
 

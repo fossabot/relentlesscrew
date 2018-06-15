@@ -26,13 +26,7 @@ public class Config {
     @Getter @Setter
     private String discordWebhook;
     @Getter @Setter
-    private String apiKey;
-    @Getter @Setter
     private String discordInvite;
-    @Getter @Setter
-    private String recaptchaSiteKey;
-    @Getter @Setter
-    private String recaptchaSecretKey;
 
     static {
         try {
