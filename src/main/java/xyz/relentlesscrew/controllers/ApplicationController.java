@@ -88,7 +88,7 @@ public class ApplicationController {
 
         String dauntlessUsernameDecoded = new String(Base64.decodeBase64(dauntlessUsername), "UTF-8");
         String discordUsernameDecoded = new String(Base64.decodeBase64(discordUsername), "UTF-8");
-        String title = dauntlessUsernameDecoded+ " just appied.";
+        String title = dauntlessUsernameDecoded+ " just applied.";
         StringBuilder description = new StringBuilder();
         description.append("Dauntless Username: ")
                 .append(dauntlessUsernameDecoded)

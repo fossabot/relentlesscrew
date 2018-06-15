@@ -2,15 +2,9 @@ package xyz.relentlesscrew.persistence.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 import xyz.relentlesscrew.persistence.DAO.RankDAO;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -31,7 +25,7 @@ public class Member implements Serializable {
 
     @Getter @Setter
     @ManyToOne
-    @ColumnDefault("3")
+    @JoinColumn(columnDefinition = "bigint default 3")
     private Rank rank;
 
     public Member(Long discordId, String dauntlessUsername, Long discordRole) {
