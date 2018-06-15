@@ -2,6 +2,7 @@ package xyz.relentlesscrew.persistence.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import xyz.relentlesscrew.persistence.DAO.RankDAO;
 
 import javax.persistence.Column;
@@ -30,6 +31,7 @@ public class Member implements Serializable {
 
     @Getter @Setter
     @ManyToOne
+    @ColumnDefault("3")
     private Rank rank;
 
     public Member(Long discordId, String dauntlessUsername, Long discordRole) {

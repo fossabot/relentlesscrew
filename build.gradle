@@ -22,7 +22,7 @@ description = """"""
 defaultTasks = ['clean', 'jar']
 
 dependencies {
-    compile 'com.sparkjava:spark-core:2.7.1'
+    compile 'com.sparkjava:spark-core:2.7.2'
     compile 'com.sparkjava:spark-template-handlebars:2.7.1'
 
     compile 'org.hibernate:hibernate-hikaricp:5.2.16.Final'
@@ -37,8 +37,7 @@ dependencies {
 
     compile 'org.slf4j:slf4j-simple:1.7.21'
 
-    compile 'org.quartz-scheduler:quartz:2.2.1'
-    compile 'org.quartz-scheduler:quartz-jobs:2.2.1'
+    compile 'com.github.MrPowerGamerBR:TemmieWebhook:-SNAPSHOT'
 }
 
 jar {

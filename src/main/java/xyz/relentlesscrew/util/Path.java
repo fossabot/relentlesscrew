@@ -20,6 +20,9 @@ public class Path {
 
             public static final String ALL_APPLICATIONS = "applications/";
             public static final String SINGLE_APPLICATION = "applications/:id/";
+
+            public static final String ALL_RANKS = "ranks/";
+            public static final String SINGLE_RANK = "ranks/:id/";
         }
     }
 

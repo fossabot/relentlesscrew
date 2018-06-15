@@ -26,6 +26,12 @@ public class Application implements Serializable {
     @Getter
     private Date appliedOn;
 
+    public Application(String discordUsername, String dauntlessUsername, Date appliedOn) {
+        this.discordUsername = discordUsername;
+        this.dauntlessUsername = dauntlessUsername;
+        this.appliedOn = appliedOn;
+    }
+
     public Application(String discordUsername, String dauntlessUsername) {
         this.discordUsername = discordUsername;
         this.dauntlessUsername = dauntlessUsername;

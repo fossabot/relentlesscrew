@@ -3,6 +3,9 @@ package xyz.relentlesscrew.controllers;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.mrpowergamerbr.temmiewebhook.DiscordEmbed;
+import com.mrpowergamerbr.temmiewebhook.DiscordMessage;
+import com.mrpowergamerbr.temmiewebhook.TemmieWebhook;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,21 +47,21 @@ public class ApplicationController {
         }
 
         // server-sided re-captcha verification
-        Map<String, String> gData = new HashMap<>();
-        gData.put("secret", config.getRecaptchaSecretKey());
-        gData.put("response", recaptchaResponse);
-        gData.put("remoteip", request.ip());
+        Map<String, String> recaptchaData = new HashMap<>();
+        recaptchaData.put("secret", config.getRecaptchaSecretKey());
+        recaptchaData.put("response", recaptchaResponse);
+        recaptchaData.put("remoteip", request.ip());
 
         boolean captchaSuccess = new Gson()
                 .fromJson(HttpRequest
                                   .post("https://www.google.com/recaptcha/api/siteverify")
-                                  .form(gData)
+                                  .form(recaptchaData)
                                   .body(), JsonObject.class)
                 .get("success")
                 .getAsBoolean();
 
         if (!captchaSuccess) {
-            return JsonUtil.responseJson(response, "Recaptcha failed.");
+            return JsonUtil.responseJson(response, "Recaptcha verification failed.");
         }
 
         // base64 the user input (who knows what kind of characters they used)
@@ -73,14 +76,34 @@ public class ApplicationController {
 
         // create a new application and add it to the database (if it can)
         Application application = new Application(discordUsername, dauntlessUsername);
-        String responseString;
-        if (applicationDAO.add(application)) {
-            responseString = "Thanks for applying, if you haven't already please join our discord to complete the application.";
-        } else {
-            responseString = "Looks like you already applied, if you think this is a mistake, please contact one of the leaders";
+
+        // if it returns false, 9/10 he/she already applied
+        if (!applicationDAO.add(application)) {
+            return JsonUtil.responseJson(response, "Looks like you already applied, " +
+                    "if you think this is a mistake, please contact one of the leaders");
         }
 
-        return JsonUtil.responseJson(response, responseString);
+        // send a message to discord that a user applied
+        TemmieWebhook webhook = new TemmieWebhook(config.getDiscordWebhook());
+
+        String title = dauntlessUsername + " just appied.";
+        StringBuilder description = new StringBuilder();
+        description.append("Dauntless Username: ")
+                .append(new String(Base64.decodeBase64(dauntlessUsername), "UTF-8"))
+                .append("\n");
+        description.append("Discord Username: ")
+                .append(new String(Base64.decodeBase64(discordUsername), "UTF-8"))
+                .append("\n");
+
+        DiscordEmbed embed = new DiscordEmbed(title, String.valueOf(description));
+        embed.setColor(Integer.parseInt("002cb6", 16));
+
+        DiscordMessage discordMessage = new DiscordMessage();
+        discordMessage.getEmbeds().add(embed);
+        webhook.sendMessage(discordMessage);
+
+        return JsonUtil.responseJson(response, "Thanks for applying, if you haven't " +
+                "already please join our discord to complete the application.");
     };
 
     /**
@@ -90,14 +113,18 @@ public class ApplicationController {
     public static Route addApplication = (request, response) -> {
         Application application = new Gson().fromJson(request.body(), Application.class);
 
-        String validation = validateInput(application.getDiscordUsername(), application.getDauntlessUsername());
+        String validation =
+                validateInput(application.getDiscordUsername(), application.getDauntlessUsername());
+
         if (validation != null) {
             return JsonUtil.responseJson(response, validation);
         }
 
         String responseString;
         if (applicationDAO.add(application)) {
-            responseString = "Application for " + application.getDauntlessUsername() + " was successfully added";
+            responseString = "Application for " +
+                    application.getDauntlessUsername() +
+                    " was successfully added";
         } else {
             responseString = "Could not add the application. It already exists?";
         }
@@ -135,7 +162,10 @@ public class ApplicationController {
 
         String responseString;
         if (applicationDAO.remove(application)) {
-            responseString = "Application for " + application.getDauntlessUsername() + "(" + application.getId() + ") was successfully removed.";
+            responseString = "Application for " +
+                    application.getDauntlessUsername() +
+                    "(" + application.getId() +
+                    ") was successfully removed.";
         } else {
             responseString = "Could not remove the application. Please check the logs.";
         }
