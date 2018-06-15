@@ -1,6 +1,5 @@
 package xyz.relentlesscrew.persistence.DAO;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -45,10 +44,12 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
             session.save(transientObject);
 
             transaction.commit();
-        } catch (HibernateException e) {
-            LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
-            if (transaction != null) {
-                transaction.rollback();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            try {
+                if (transaction != null) transaction.rollback();
+            } catch (Exception ex) {
+                LOGGER.error(ex.getMessage());
             }
             return false;
         }
@@ -69,10 +70,12 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
             session.remove(persistentObject);
 
             transaction.commit();
-        } catch (HibernateException e) {
-            LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
-            if (transaction != null) {
-                transaction.rollback();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            try {
+                if (transaction != null) transaction.rollback();
+            } catch (Exception ex) {
+                LOGGER.error(ex.getMessage());
             }
             return false;
         }
@@ -92,10 +95,12 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
             session.update(transientObject);
 
             transaction.commit();
-        } catch (HibernateException e) {
-            LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
-            if (transaction != null) {
-                transaction.rollback();
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            try {
+                if (transaction != null) transaction.rollback();
+            } catch (Exception ex) {
+                LOGGER.error(ex.getMessage());
             }
         }
     }
@@ -110,7 +115,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
         T persistentObject = null;
         try (Session session = sessionFactory.openSession()) {
             persistentObject = session.get(clazz, id);
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
         }
 
@@ -129,7 +134,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
             query.from(clazz);
 
             persistentObjects = session.createQuery(query).getResultList();
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
         }
         return persistentObjects;
@@ -152,7 +157,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
                     .setFirstResult(beginIndex)
                     .setMaxResults(endIndex - beginIndex)
                     .getResultList();
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
         }
         return persistentObjects;
@@ -168,7 +173,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
             query.select(builder.count(query.from(clazz)));
 
             rows = session.createQuery(query).getSingleResult();
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
         }
         return rows;

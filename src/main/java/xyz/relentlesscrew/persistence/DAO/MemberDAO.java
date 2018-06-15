@@ -1,6 +1,5 @@
 package xyz.relentlesscrew.persistence.DAO;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import xyz.relentlesscrew.persistence.model.Member;
 import xyz.relentlesscrew.persistence.model.Member_;
@@ -20,7 +19,7 @@ public class MemberDAO extends GenericDAOImpl<Member, Long> {
             query.where(criteriaBuilder.equal(root.get(Member_.dauntlessUsername), dauntlessUsername));
 
             member = session.createQuery(query).uniqueResult();
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
         }
         return member;
@@ -35,7 +34,7 @@ public class MemberDAO extends GenericDAOImpl<Member, Long> {
             query.where(criteriaBuilder.equal(root.get(Member_.discordId), discordId));
 
             member = session.createQuery(query).uniqueResult();
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
         }
         return member;

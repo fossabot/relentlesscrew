@@ -1,6 +1,7 @@
 package xyz.relentlesscrew.controllers;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Route;
@@ -40,9 +41,12 @@ public class MemberController {
     public static Route addMember = (request, response) -> {
         Member member;
         try {
-            member = new Gson().fromJson(request.body(), Member.class);
+            GsonBuilder gson = new GsonBuilder();
+            gson.registerTypeAdapter(Member.class, new Member.MemberDeserializer());
+            member = gson.create().fromJson(request.body(), Member.class);
+            System.out.println(member.toString());
         } catch (Exception e) {
-            LOGGER.error(e.getMessage() + " Caused by: " + e.getCause());
+            LOGGER.error(e.getMessage());
             return JsonUtil.responseJson(response, "There was an error. Check the logs");
         }
 
@@ -54,7 +58,7 @@ public class MemberController {
         try {
             member = new Gson().fromJson(request.body(), Member.class);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage() + " Caused by: " + e.getCause());
+            LOGGER.error(e.getMessage());
             return JsonUtil.responseJson(response, "There was an error. Check the logs");
         }
 

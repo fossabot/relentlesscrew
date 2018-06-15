@@ -20,7 +20,7 @@ public class ApplicationDAO extends GenericDAOImpl<Application, Long> {
             query.where(criteriaBuilder.equal(root.get(Application_.discordUsername), discordUsername));
 
             application = session.createQuery(query).uniqueResult();
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
         }
         return application;

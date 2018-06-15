@@ -1,6 +1,5 @@
 package xyz.relentlesscrew.persistence.DAO;
 
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import xyz.relentlesscrew.persistence.model.Rank;
 import xyz.relentlesscrew.persistence.model.Rank_;
@@ -20,7 +19,7 @@ public class RankDAO extends GenericDAOImpl<Rank, Long> {
             query.where(criteriaBuilder.equal(root.get(Rank_.discordRoleId), discordRole));
 
             rank = session.createQuery(query).uniqueResult();
-        } catch (HibernateException e) {
+        } catch (Exception e) {
             LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
         }
         return rank;
