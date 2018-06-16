@@ -1,6 +1,5 @@
 package xyz.relentlesscrew.controllers;
 
-import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
@@ -39,13 +38,23 @@ public class MemberController {
         return JsonUtil.responseJson(response, memberList);
     };
 
+    public static Route getSingleMember = (request, response) -> {
+        Long discordId;
+        try {
+            discordId = Long.parseLong(request.params(":id"));
+        } catch (NumberFormatException e) {
+            LOGGER.error(e.getMessage());
+            return JsonUtil.responseJson(response, "Discord id must be a number.");
+        }
+        return JsonUtil.responseJson(response, memberDAO.findByDiscordId(discordId));
+    };
+
     public static Route addMember = (request, response) -> {
         Member member;
         try {
             GsonBuilder gson = new GsonBuilder();
             gson.registerTypeAdapter(Member.class, new Member.MemberDeserializer());
             member = gson.create().fromJson(request.body(), Member.class);
-            System.out.println(member.toString());
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             return JsonUtil.responseJson(response, "There was an error. Check the logs");
@@ -57,7 +66,9 @@ public class MemberController {
     public static Route updateMember = (request, response) -> {
         Member member;
         try {
-            member = new Gson().fromJson(request.body(), Member.class);
+            GsonBuilder gson = new GsonBuilder();
+            gson.registerTypeAdapter(Member.class, new Member.MemberDeserializer());
+            member = gson.create().fromJson(request.body(), Member.class);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             return JsonUtil.responseJson(response, "There was an error. Check the logs");
@@ -65,7 +76,7 @@ public class MemberController {
 
         memberDAO.update(member);
 
-        return JsonUtil.responseJson(response, member);
+        return JsonUtil.responseJson(response, "Member successfully updated.");
     };
 
     public static Route removeMember = (request, response) -> {

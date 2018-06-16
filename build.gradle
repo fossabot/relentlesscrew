@@ -29,15 +29,13 @@ dependencies {
     compile 'org.hibernate:hibernate-jpamodelgen:5.2.16.Final'
     compile 'org.postgresql:postgresql:42.2.2.jre6'
 
-    compile 'com.github.kevinsawicki:http-request:6.0'
     compile 'org.projectlombok:lombok:1.16.20'
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'commons-codec:commons-codec:1.11'
     compile 'org.yaml:snakeyaml:1.21'
+    compile 'com.github.MrPowerGamerBR:TemmieWebhook:-SNAPSHOT'
 
     compile 'org.slf4j:slf4j-simple:1.7.21'
-
-    compile 'com.github.MrPowerGamerBR:TemmieWebhook:-SNAPSHOT'
 }
 
 jar {

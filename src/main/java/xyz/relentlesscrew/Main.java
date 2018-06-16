@@ -45,6 +45,7 @@ public class Main {
 
             path(Path.Web.Api.ALL_MEMBERS, () -> {
                 get("/", MemberController.getAllMembers);
+                get(Path.Web.Api.SINGLE_MEMBER, MemberController.getSingleMember);
                 get(Path.Web.Api.RANGE_OF_MEMBERS, MemberController.getRangeOfMembers);
                 get(Path.Web.Api.RANGE_OF_MEMBERS_WITH_LIMIT, MemberController.getRangeOfMembers);
             });

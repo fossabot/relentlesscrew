@@ -16,7 +16,7 @@ public class Path {
             public static final String ALL_MEMBERS = "members/";
             public static final String RANGE_OF_MEMBERS = ":page/";
             public static final String RANGE_OF_MEMBERS_WITH_LIMIT = ":page/:limit/";
-            public static final String SINGLE_MEMBER = "members/:id/";
+            public static final String SINGLE_MEMBER = "single/:id/";
 
             public static final String ALL_APPLICATIONS = "applications/";
             public static final String SINGLE_APPLICATION = "applications/:id/";
