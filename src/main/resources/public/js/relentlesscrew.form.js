@@ -1,6 +1,6 @@
 (function ($) {
-    var discordUsername = $('#discordusername').trim();
-    var dauntlessUsername = $('#dauntlessusername').trim();
+    var discordUsername = $('#discordusername');
+    var dauntlessUsername = $('#dauntlessusername');
     var discordReg = /.*#\d{4}$/;
     var dauntlessReg = /^[a-zA-Z0-9]{3,32}$/;
 
@@ -40,8 +40,8 @@
         result.text("loading...");
 
         var formData = {
-            'discordusername': discordUsername.val(),
-            'dauntlessusername': dauntlessUsername.val(),
+            'discordusername': $.trim(discordUsername.val()),
+            'dauntlessusername': $.trim(dauntlessUsername.val()),
             'g-recaptcha-response': grResponse
         };
 
