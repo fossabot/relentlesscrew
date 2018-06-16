@@ -4,7 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import xyz.relentlesscrew.Main;
+import xyz.relentlesscrew.util.HibernateUtil;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -25,22 +25,23 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
 
     /**
      * Make a transient object persistent
-     * @param transientObject
+     * @param transientObject object to make persistent
      * @return true if added
      */
     @Override
     public boolean add(T transientObject) {
         Transaction transaction = null;
-        try (Session session = Main.sessionFactory.openSession()) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
 
             session.save(transientObject);
 
             transaction.commit();
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+        } catch (Throwable t) {
+            LOGGER.error(t.getMessage());
             try {
-                if (transaction != null) transaction.rollback();
+                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
             } catch (Exception ex) {
                 LOGGER.error(ex.getMessage());
             }
@@ -51,22 +52,23 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
 
     /**
      * Removes a persistent object from the database
-     * @param persistentObject
+     * @param persistentObject object to remove
      * @return true if removed
      */
     @Override
     public boolean remove(T persistentObject) {
         Transaction transaction = null;
-        try (Session session = Main.sessionFactory.openSession()) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
 
             session.remove(persistentObject);
 
             transaction.commit();
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+        } catch (Throwable t) {
+            LOGGER.error(t.getMessage());
             try {
-                if (transaction != null) transaction.rollback();
+                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
             } catch (Exception ex) {
                 LOGGER.error(ex.getMessage());
             }
@@ -77,21 +79,22 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
 
     /**
      * Save changes made to a persistent object
-     * @param transientObject
+     * @param transientObject updated object
      */
     @Override
     public void update(T transientObject) {
         Transaction transaction = null;
-        try (Session session = Main.sessionFactory.openSession()) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             transaction = session.beginTransaction();
 
             session.update(transientObject);
 
             transaction.commit();
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+        } catch (Throwable t) {
+            LOGGER.error(t.getMessage());
             try {
-                if (transaction != null) transaction.rollback();
+                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
             } catch (Exception ex) {
                 LOGGER.error(ex.getMessage());
             }
@@ -100,16 +103,17 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
 
     /**
      * Fetches the persistent object
-     * @param id
+     * @param id id of persistent object
      * @return persistent object from the database
      */
     @Override
     public T findById(ID id) {
         T persistentObject = null;
-        try (Session session = Main.sessionFactory.openSession()) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             persistentObject = session.get(clazz, id);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
+            LOGGER.error(e.getMessage());
         }
 
         return persistentObject;
@@ -122,27 +126,29 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
     @Override
     public List<T> findAll() {
         List<T> persistentObjects = null;
-        try (Session session = Main.sessionFactory.openSession()) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             CriteriaQuery<T> query = session.getCriteriaBuilder().createQuery(clazz);
             query.from(clazz);
 
             persistentObjects = session.createQuery(query).getResultList();
         } catch (Exception e) {
-            LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
+            LOGGER.error(e.getMessage());
         }
         return persistentObjects;
     }
 
     /**
      * Fetches a range of persistent objects
-     * @param beginIndex
-     * @param endIndex
+     * @param beginIndex start id
+     * @param endIndex last id
      * @return
      */
     @Override
     public List<T> findRange(int beginIndex, int endIndex) {
         List<T> persistentObjects = null;
-        try (Session session = Main.sessionFactory.openSession()) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             CriteriaQuery<T> query = session.getCriteriaBuilder().createQuery(clazz);
             query.from(clazz);
 
@@ -151,7 +157,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
                     .setMaxResults(endIndex - beginIndex)
                     .getResultList();
         } catch (Exception e) {
-            LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
+            LOGGER.error(e.getMessage());
         }
         return persistentObjects;
     }
@@ -159,7 +165,8 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
     @Override
     public Long countRows() {
         Long rows = null;
-        try (Session session = Main.sessionFactory.openSession()) {
+        try {
+            Session session = HibernateUtil.getSessionFactory().getCurrentSession();
             CriteriaBuilder builder = session.getCriteriaBuilder();
 
             CriteriaQuery<Long> query = builder.createQuery(Long.class);
@@ -167,7 +174,7 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
 
             rows = session.createQuery(query).getSingleResult();
         } catch (Exception e) {
-            LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
+            LOGGER.error(e.getMessage());
         }
         return rows;
     }

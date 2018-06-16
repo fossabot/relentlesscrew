@@ -164,6 +164,11 @@ public class ApplicationController {
         return JsonUtil.responseJson(response, application);
     };
 
+    /**
+     * Remove application route
+     * @param id id of the
+     * @return json response with success or failure message
+     */
     public static Route removeApplication = (request, response) -> {
         Long id = Long.parseLong(request.params(":id"));
         Application application = applicationDAO.findById(id);
@@ -171,7 +176,7 @@ public class ApplicationController {
         String responseString;
         if (applicationDAO.remove(application)) {
             responseString = "Application for " +
-                    application.getDauntlessUsername() +
+                    new String(Base64.decodeBase64(application.getDauntlessUsername())) +
                     "(" + application.getId() +
                     ") was successfully removed.";
         } else {

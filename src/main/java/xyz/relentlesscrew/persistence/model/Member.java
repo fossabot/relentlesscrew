@@ -25,7 +25,7 @@ public class Member implements Serializable {
     private String dauntlessUsername;
 
     @ManyToOne
-    @JoinColumn(columnDefinition = "bigint default 3")
+    @JoinColumn
     private Rank rank;
 
     public Member(Long discordId, String dauntlessUsername, Long discordRole) {
