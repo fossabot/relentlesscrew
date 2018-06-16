@@ -40,8 +40,8 @@
         result.text("loading...");
 
         var formData = {
-            'discordusername': discordUsername.val().replace(/\s+/g, ''),
-            'dauntlessusername': dauntlessUsername.val().replace(/\s+/g, ''),
+            'discordusername': normalizeDiscordUsername(discordUsername.val()),
+            'dauntlessusername': dauntlessUsername.val(),
             'g-recaptcha-response': grResponse
         };
 
@@ -78,4 +78,11 @@
             return false;
         }
     }
+
+    function normalizeDiscordUsername(discordUsername) {
+        var username = discordUsername.substring(0, discordUsername.lastIndexOf("#")).trim();
+        var discriminator = discordUsername.substring(discordUsername.lastIndexOf("#"), discordUsername.length);
+        return username + discriminator;
+    }
+
 })(jQuery);
