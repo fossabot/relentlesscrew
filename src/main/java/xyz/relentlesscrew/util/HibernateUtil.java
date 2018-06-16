@@ -1,7 +1,6 @@
 package xyz.relentlesscrew.util;
 
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +19,7 @@ public class HibernateUtil {
                     .setProperty("hibernate.hikari.dataSource.url", System.getenv("DB_URL"))
                     .setProperty("hibernate.hikari.dataSource.user", System.getenv("DB_USER"))
                     .setProperty("hibernate.hikari.dataSource.password", System.getenv("DB_PASSWORD"))
-                    .configure()
-                    .buildSessionFactory(new StandardServiceRegistryBuilder().build());
+                    .configure().buildSessionFactory();
         } catch (Throwable throwable) {
             LOGGER.error(throwable.getMessage());
             throw new ExceptionInInitializerError(throwable);

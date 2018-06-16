@@ -108,12 +108,20 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
      */
     @Override
     public T findById(ID id) {
+        Transaction transaction = null;
         T persistentObject = null;
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            transaction = session.beginTransaction();
             persistentObject = session.get(clazz, id);
+            transaction.commit();
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
+            try {
+                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
+            } catch (Exception ex) {
+                LOGGER.error(ex.getMessage());
+            }
         }
 
         return persistentObject;
@@ -125,15 +133,23 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
      */
     @Override
     public List<T> findAll() {
+        Transaction transaction = null;
         List<T> persistentObjects = null;
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            transaction = session.beginTransaction();
             CriteriaQuery<T> query = session.getCriteriaBuilder().createQuery(clazz);
             query.from(clazz);
 
             persistentObjects = session.createQuery(query).getResultList();
+            transaction.commit();
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
+            try {
+                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
+            } catch (Exception ex) {
+                LOGGER.error(ex.getMessage());
+            }
         }
         return persistentObjects;
     }
@@ -146,9 +162,11 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
      */
     @Override
     public List<T> findRange(int beginIndex, int endIndex) {
+        Transaction transaction = null;
         List<T> persistentObjects = null;
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            transaction = session.beginTransaction();
             CriteriaQuery<T> query = session.getCriteriaBuilder().createQuery(clazz);
             query.from(clazz);
 
@@ -156,25 +174,39 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
                     .setFirstResult(beginIndex)
                     .setMaxResults(endIndex - beginIndex)
                     .getResultList();
+            transaction.commit();
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
+            try {
+                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
+            } catch (Exception ex) {
+                LOGGER.error(ex.getMessage());
+            }
         }
         return persistentObjects;
     }
 
     @Override
     public Long countRows() {
+        Transaction transaction = null;
         Long rows = null;
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            transaction = session.beginTransaction();
             CriteriaBuilder builder = session.getCriteriaBuilder();
 
             CriteriaQuery<Long> query = builder.createQuery(Long.class);
             query.select(builder.count(query.from(clazz)));
 
             rows = session.createQuery(query).getSingleResult();
+            transaction.commit();
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
+            try {
+                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
+            } catch (Exception ex) {
+                LOGGER.error(ex.getMessage());
+            }
         }
         return rows;
     }

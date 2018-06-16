@@ -1,6 +1,7 @@
 package xyz.relentlesscrew.persistence.DAO;
 
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import xyz.relentlesscrew.persistence.model.Rank;
 import xyz.relentlesscrew.persistence.model.Rank_;
 import xyz.relentlesscrew.util.HibernateUtil;
@@ -17,17 +18,25 @@ public class RankDAO extends GenericDAOImpl<Rank, Long> {
      * @return null if nothing was found
      */
     public Rank findRankByDiscordRole(Long discordRole) {
+        Transaction transaction = null;
         Rank rank = null;
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+            transaction = session.beginTransaction();
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Rank> query = criteriaBuilder.createQuery(Rank.class);
             Root<Rank> root = query.from(Rank.class);
             query.where(criteriaBuilder.equal(root.get(Rank_.discordRoleId), discordRole));
 
             rank = session.createQuery(query).uniqueResult();
+            transaction.commit();
         } catch (Exception e) {
-            LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
+            LOGGER.error(e.getMessage());
+            try {
+                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
+            } catch (Exception ex) {
+                LOGGER.error(ex.getMessage());
+            }
         }
         return rank;
     }
