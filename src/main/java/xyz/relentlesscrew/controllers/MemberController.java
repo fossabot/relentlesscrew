@@ -2,6 +2,7 @@ package xyz.relentlesscrew.controllers;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.commons.codec.binary.Base64;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Route;
@@ -79,7 +80,7 @@ public class MemberController {
 
         String responseString;
         if (memberDAO.remove(member)) {
-            responseString = "Member " + member.getDauntlessUsername() + "(" + member.getId() + ") was successfully removed.";
+            responseString = "Member " + new String(Base64.decodeBase64(member.getDauntlessUsername())) + "(" + member.getId() + ") was successfully removed.";
         } else {
             responseString = "Could not remove the member. Please check the logs.";
         }
