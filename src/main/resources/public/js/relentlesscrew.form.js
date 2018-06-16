@@ -40,8 +40,8 @@
         result.text("loading...");
 
         var formData = {
-            'discordusername': $.trim(discordUsername.val()),
-            'dauntlessusername': $.trim(dauntlessUsername.val()),
+            'discordusername': discordUsername.val().replace(/\s+/g, ''),
+            'dauntlessusername': dauntlessUsername.val().replace(/\s+/g, ''),
             'g-recaptcha-response': grResponse
         };
 

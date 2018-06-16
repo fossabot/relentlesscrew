@@ -36,8 +36,8 @@ public class ApplicationController {
         response.type("application/json");
 
          // fetch the params
-        String discordUsername = request.queryParams("discordusername").trim();
-        String dauntlessUsername = request.queryParams("dauntlessusername").trim();
+        String discordUsername = request.queryParams("discordusername").replaceAll("\\s", "");
+        String dauntlessUsername = request.queryParams("dauntlessusername").replaceAll("\\s", "");
         String recaptchaResponse = request.queryParams("g-recaptcha-response");
 
         // check/validate the discord and dauntless usernames
@@ -116,8 +116,8 @@ public class ApplicationController {
         Application application = new Gson().fromJson(request.body(), Application.class);
 
         // trim white spaces
-        application.setDiscordUsername(application.getDiscordUsername().trim());
-        application.setDauntlessUsername(application.getDauntlessUsername().trim());
+        application.setDiscordUsername(application.getDiscordUsername().replaceAll("\\s", ""));
+        application.setDauntlessUsername(application.getDauntlessUsername().replaceAll("\\s", ""));
 
         String validation =
                 validateInput(application.getDiscordUsername(), application.getDauntlessUsername());
