@@ -68,7 +68,13 @@ public class MemberController {
     };
 
     public static Route removeMember = (request, response) -> {
-        Long id = Long.parseLong(request.params(":id"));
+        Long id;
+        try {
+            id = Long.parseLong(request.params(":id"));
+        } catch (NumberFormatException e) {
+            LOGGER.error(e.getMessage());
+            return JsonUtil.responseJson(response, "Id of member should be a number!");
+        }
         Member member = memberDAO.findById(id);
 
         String responseString;
