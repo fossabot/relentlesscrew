@@ -1,6 +1,6 @@
 (function ($) {
-    var discordUsername = $('#discordusername');
-    var dauntlessUsername = $('#dauntlessusername');
+    var discordUsername = $('#discordusername').trim();
+    var dauntlessUsername = $('#dauntlessusername').trim();
     var discordReg = /.*#\d{4}$/;
     var dauntlessReg = /^[a-zA-Z0-9]{3,32}$/;
 
