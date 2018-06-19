@@ -18,11 +18,10 @@ public class ApplicationDAO extends GenericDAOImpl<Application, Long> {
      * @return null if nothing is found, otherwise the persistent object
      */
     public Application findByDiscordUsername(String discordUsername) {
-        Transaction transaction = null;
         Application application = null;
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            transaction = session.beginTransaction();
+            Transaction transaction = session.beginTransaction();
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Application> query = criteriaBuilder.createQuery(Application.class);
             Root<Application> root = query.from(Application.class);
@@ -32,11 +31,6 @@ public class ApplicationDAO extends GenericDAOImpl<Application, Long> {
             transaction.commit();
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            try {
-                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
-            } catch (Exception ex) {
-                LOGGER.error(ex.getMessage());
-            }
         }
         return application;
     }

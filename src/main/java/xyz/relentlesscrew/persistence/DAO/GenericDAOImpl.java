@@ -30,21 +30,15 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
      */
     @Override
     public boolean add(T transientObject) {
-        Transaction transaction = null;
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            transaction = session.beginTransaction();
+            Transaction transaction = session.beginTransaction();
 
             session.save(transientObject);
 
             transaction.commit();
         } catch (Throwable t) {
             LOGGER.error(t.getMessage());
-            try {
-                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
-            } catch (Exception ex) {
-                LOGGER.error(ex.getMessage());
-            }
             return false;
         }
         return true;
@@ -57,21 +51,15 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
      */
     @Override
     public boolean remove(T persistentObject) {
-        Transaction transaction = null;
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            transaction = session.beginTransaction();
+            Transaction transaction  = session.beginTransaction();
 
             session.remove(persistentObject);
 
             transaction.commit();
         } catch (Throwable t) {
             LOGGER.error(t.getMessage());
-            try {
-                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
-            } catch (Exception ex) {
-                LOGGER.error(ex.getMessage());
-            }
             return false;
         }
         return true;
@@ -83,21 +71,15 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
      */
     @Override
     public void update(T transientObject) {
-        Transaction transaction = null;
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            transaction = session.beginTransaction();
+            Transaction transaction = session.beginTransaction();
 
             session.update(transientObject);
 
             transaction.commit();
         } catch (Throwable t) {
             LOGGER.error(t.getMessage());
-            try {
-                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
-            } catch (Exception ex) {
-                LOGGER.error(ex.getMessage());
-            }
         }
     }
 
@@ -108,20 +90,14 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
      */
     @Override
     public T findById(ID id) {
-        Transaction transaction = null;
         T persistentObject = null;
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            transaction = session.beginTransaction();
+            Transaction transaction = session.beginTransaction();
             persistentObject = session.get(clazz, id);
             transaction.commit();
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            try {
-                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
-            } catch (Exception ex) {
-                LOGGER.error(ex.getMessage());
-            }
         }
 
         return persistentObject;
@@ -133,11 +109,10 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
      */
     @Override
     public List<T> findAll() {
-        Transaction transaction = null;
         List<T> persistentObjects = null;
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            transaction = session.beginTransaction();
+            Transaction transaction = session.beginTransaction();
             CriteriaQuery<T> query = session.getCriteriaBuilder().createQuery(clazz);
             query.from(clazz);
 
@@ -145,11 +120,6 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
             transaction.commit();
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            try {
-                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
-            } catch (Exception ex) {
-                LOGGER.error(ex.getMessage());
-            }
         }
         return persistentObjects;
     }
@@ -162,11 +132,10 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
      */
     @Override
     public List<T> findRange(int beginIndex, int endIndex) {
-        Transaction transaction = null;
         List<T> persistentObjects = null;
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            transaction = session.beginTransaction();
+            Transaction transaction = session.beginTransaction();
             CriteriaQuery<T> query = session.getCriteriaBuilder().createQuery(clazz);
             query.from(clazz);
 
@@ -177,22 +146,16 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
             transaction.commit();
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            try {
-                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
-            } catch (Exception ex) {
-                LOGGER.error(ex.getMessage());
-            }
         }
         return persistentObjects;
     }
 
     @Override
     public Long countRows() {
-        Transaction transaction = null;
         Long rows = null;
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            transaction = session.beginTransaction();
+            Transaction transaction = session.beginTransaction();
             CriteriaBuilder builder = session.getCriteriaBuilder();
 
             CriteriaQuery<Long> query = builder.createQuery(Long.class);
@@ -202,11 +165,6 @@ public abstract class GenericDAOImpl<T, ID extends Serializable> implements Gene
             transaction.commit();
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
-            try {
-                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
-            } catch (Exception ex) {
-                LOGGER.error(ex.getMessage());
-            }
         }
         return rows;
     }

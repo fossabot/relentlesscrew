@@ -18,11 +18,10 @@ public class MemberDAO extends GenericDAOImpl<Member, Long> {
      * @return null if nothing is found, otherwise the persistent object
      */
     public Member findByDauntlessUsername(String dauntlessUsername) {
-        Transaction transaction = null;
         Member member = null;
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            transaction = session.beginTransaction();
+            Transaction transaction = session.beginTransaction();
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Member> query = criteriaBuilder.createQuery(Member.class);
             Root<Member> root = query.from(Member.class);
@@ -32,11 +31,6 @@ public class MemberDAO extends GenericDAOImpl<Member, Long> {
             transaction.commit();
         } catch (Exception e) {
             LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
-            try {
-                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
-            } catch (Exception ex) {
-                LOGGER.error(ex.getMessage());
-            }
         }
         return member;
     }
@@ -47,11 +41,10 @@ public class MemberDAO extends GenericDAOImpl<Member, Long> {
      * @return null if nothing is found, otherwise the persistent object
      */
     public Member findByDiscordId(Long discordId) {
-        Transaction transaction = null;
         Member member = null;
         try {
             Session session = HibernateUtil.getSessionFactory().getCurrentSession();
-            transaction = session.beginTransaction();
+            Transaction transaction = session.beginTransaction();
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Member> query = criteriaBuilder.createQuery(Member.class);
             Root<Member> root = query.from(Member.class);
@@ -61,11 +54,6 @@ public class MemberDAO extends GenericDAOImpl<Member, Long> {
             transaction.commit();
         } catch (Exception e) {
             LOGGER.error(e.getMessage() + "Caused by: " + e.getCause());
-            try {
-                if (transaction != null && transaction.isActive()) { transaction.rollback(); }
-            } catch (Exception ex) {
-                LOGGER.error(ex.getMessage());
-            }
         }
         return member;
     }
