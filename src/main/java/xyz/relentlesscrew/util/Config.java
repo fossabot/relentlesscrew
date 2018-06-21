@@ -24,8 +24,6 @@ public class Config {
     @Getter @Setter
     private String latestAnnouncement;
     @Getter @Setter
-    private String discordWebhook;
-    @Getter @Setter
     private String discordInvite;
 
     static {

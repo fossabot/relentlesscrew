@@ -84,7 +84,7 @@ public class ApplicationController {
         }
 
         // send a message to discord that a user applied
-        TemmieWebhook webhook = new TemmieWebhook(config.getDiscordWebhook());
+        TemmieWebhook webhook = new TemmieWebhook(System.getenv("DISCORD_WEBHOOK"));
 
         String dauntlessUsernameDecoded = new String(Base64.decodeBase64(dauntlessUsername), "UTF-8");
         String discordUsernameDecoded = new String(Base64.decodeBase64(discordUsername), "UTF-8");
