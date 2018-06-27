@@ -25,6 +25,8 @@ public class Config {
     private String latestAnnouncement;
     @Getter @Setter
     private String discordInvite;
+    @Getter @Setter
+    private String webUrl;
 
     static {
         try {
